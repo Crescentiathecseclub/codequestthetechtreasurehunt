@@ -1,6 +1,6 @@
 const tasks = [
-  { id: 1, description: "Solve a geography question" },
-  { id: 2, description: "Basic math calculation" },
+  { id: 1, description: "Open file on desktop file name is crescentia and complete the task" },
+  { id: 2, description: "see under keyboard for the question" },
   { id: 3, description: "Identify the sky color" },
   { id: 4, description: "Water boiling point in °C" },
   { id: 5, description: "Famous playwright" },
