@@ -1,0 +1,292 @@
+/* Full height and no margin */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  /* Animate background gradient */
+  background: linear-gradient(-45deg, #333F63,#000435,#000000);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* App container */
+.app {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  width: 90vw;
+  padding: 30px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeSlideIn 0.8s ease forwards;
+  opacity: 0;
+  overflow-x: hidden; /* prevent horizontal overflow */
+}
+.tasks-container {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 900px;
+  overflow-x: auto; /* allow horizontal scroll if needed */
+  padding-bottom: 10px;
+}
+/* Background animation */
+/* Scrollbar style (optional) */
+.tasks-container::-webkit-scrollbar {
+  height: 8px;
+}
+.tasks-container::-webkit-scrollbar-thumb {
+  background: #333F63;
+  border-radius: 4px;
+}
+.task-card {
+  background: #e8f0fe;
+  padding: 28px 22px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 71, 172, 0.25);
+  flex: 1 1 400px;
+  max-width: 420px;
+  min-width: 320px; /* prevent shrinking too small */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  animation: fadeSlideIn 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+/* Input fixes */
+input[type='text'] {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box; /* fix input overflow */
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 900px) {
+  .tasks-container {
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    overflow-x: visible;
+  }
+  .task-card {
+    max-width: 100%;
+    min-width: unset;
+  }
+}
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Main app container */
+.app {
+  background: rgba(255, 255, 255, 0.95); /* slightly transparent white */
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  width: 90vw;
+  padding: 30px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Animate fade-in */
+  animation: fadeSlideIn 0.8s ease forwards;
+  opacity: 0;
+}
+
+/* Fade-in and slide up animation */
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* Heading */
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #004e8c;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Tasks container flex */
+.tasks-container {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Task cards with fade and slight zoom on hover */
+.task-card {
+  background: #e8f0fe;
+  padding: 28px 22px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 71, 172, 0.25);
+  flex: 1 1 400px;
+  max-width: 420px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  animation: fadeSlideIn 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.task-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 71, 172, 0.45);
+  transform: scale(1.03);
+}
+
+/* When multiple cards present, stagger animation delays */
+.task-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.task-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+/* Task card headings */
+.task-card h2 {
+  color: #003366;
+  margin-bottom: 14px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Task description */
+.task-description {
+  font-size: 16px;
+  margin-bottom: 22px;
+  color: #222;
+  line-height: 1.5;
+}
+
+/* Inputs */
+input[type='text'] {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  transition: border-color 0.3s ease;
+}
+
+input[type='text']:focus {
+  border-color: #0056b3;
+  outline: none;
+}
+
+/* Buttons */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.6);
+}
+
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+  box-shadow: 0 6px 20px rgba(0, 86, 179, 0.8);
+}
+
+/* Completed tasks */
+.completed-tasks {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.completed-tag {
+  background: #dff0d8;
+  color: #3c763d;
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(60, 118, 61, 0.2);
+}
+
+.main-completed {
+  background: #cce5ff;
+  color: #004085;
+  box-shadow: 0 2px 8px rgba(0, 64, 133, 0.25);
+}
+
+.sub-completed {
+  background: #d4edda;
+  color: #155724;
+  box-shadow: 0 2px 8px rgba(21, 87, 36, 0.25);
+}
+
+/* Final container */
+.final-container {
+  background: #fff3cd;
+  border-left: 8px solid #ffeeba;
+  padding: 28px 40px;
+  border-radius: 16px;
+  text-align: center;
+  font-size: 20px;
+  color: #856404;
+  font-weight: 700;
+  margin-top: 40px;
+  box-shadow: 0 8px 24px rgba(255, 235, 59, 0.4);
+  animation: fadeSlideIn 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 800px) {
+  .tasks-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .task-card {
+    max-width: 100%;
+  }
+}
