@@ -1,431 +1,3 @@
-// // import React, { useState } from 'react';
-// // import tasks from './Tasks.jsx';
-// // import './App2.css';
-
-// // function App() {
-// //   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
-// //   const [stage, setStage] = useState('main');
-// //   const [userAnswer, setUserAnswer] = useState('');
-// //   const [completed, setCompleted] = useState([]);
-// //   const [allDone, setAllDone] = useState(false);
-
-// //   const mainAnswers = {
-// //     1: 'Paris',
-// //     2: '4',
-// //     3: 'Blue',
-// //     4: '100',
-// //     5: 'Shakespeare',
-// //     6: 'Jupiter',
-// //     7: '7',
-// //     8: 'Carbon dioxide'
-// //   };
-
-// //   const subTasks = {
-// //     1: {
-// //       question: "What continent is France located in?",
-// //       answer: "Europe",
-// //     },
-// //     2: {
-// //       question: "What is 5 times 3?",
-// //       answer: "15",
-// //     },
-// //     3: {
-// //       question: "What color do you get by mixing blue and yellow?",
-// //       answer: "Green",
-// //     },
-// //     4: {
-// //       question: "Is water freezing point above or below 0°C?",
-// //       answer: "Below",
-// //     },
-// //     5: {
-// //       question: "Name a famous play by Shakespeare besides Romeo and Juliet.",
-// //       answer: "Hamlet",
-// //     },
-// //     6: {
-// //       question: "Is Saturn bigger than Jupiter? (yes/no)",
-// //       answer: "No",
-// //     },
-// //     7: {
-// //       question: "Is Africa a continent? (yes/no)",
-// //       answer: "Yes",
-// //     },
-// //     8: {
-// //       question: "Do plants produce oxygen? (yes/no)",
-// //       answer: "Yes",
-// //     }
-// //   };
-
-// //   const currentTaskId = tasks[currentTaskIndex].id;
-
-// //   const handleCheck = () => {
-// //     let correctAnswer;
-
-// //     if (stage === 'main') {
-// //       correctAnswer = mainAnswers[currentTaskId].toLowerCase();
-// //     } else {
-// //       correctAnswer = subTasks[currentTaskId].answer.toLowerCase();
-// //     }
-
-// //     const userInput = userAnswer.trim().toLowerCase();
-
-// //     if (userInput === correctAnswer) {
-// //       setCompleted([...completed, { id: currentTaskId, stage }]);
-// //       setUserAnswer('');
-
-// //       if (stage === 'main') {
-// //         setStage('sub'); // Show sub-task container beside main
-// //       } else {
-// //         if (currentTaskIndex < tasks.length - 1) {
-// //           setCurrentTaskIndex(currentTaskIndex + 1);
-// //           setStage('main');
-// //         } else {
-// //           setAllDone(true);
-// //         }
-// //       }
-// //     } else {
-// //       alert('❌ Incorrect answer. Try again.');
-// //     }
-// //   };
-
-// //   return (
-// //     <div className="app">
-// //       <h1>Crescentia</h1>
-
-// //       {!allDone && (
-// //         <div className="tasks-container">
-// //           {/* Main Task Container */}
-// //           <div className="task-card main-task">
-// //             <h2>Task {tasks[currentTaskIndex].id} - Main Task</h2>
-// //             <p className="task-description">{tasks[currentTaskIndex].description}</p>
-// //             <input
-// //               type="text"
-// //               placeholder="Enter your answer..."
-// //               value={userAnswer}
-// //               onChange={e => setUserAnswer(e.target.value)}
-// //               onKeyDown={e => e.key === 'Enter' && handleCheck()}
-// //               disabled={stage !== 'main'} // Disable input if sub-task active
-// //             />
-// //             <button onClick={handleCheck} disabled={stage !== 'main'}>
-// //               Check
-// //             </button>
-// //           </div>
-
-// //           {/* Sub-task Container shown only if stage === 'sub' */}
-// //           {stage === 'sub' && (
-// //             <div className="task-card sub-task">
-// //               <h2>Task {tasks[currentTaskIndex].id} - Logical Sub-task</h2>
-// //               <p className="task-description">{subTasks[currentTaskId].question}</p>
-// //               <input
-// //                 type="text"
-// //                 placeholder="Enter your answer..."
-// //                 value={userAnswer}
-// //                 onChange={e => setUserAnswer(e.target.value)}
-// //                 onKeyDown={e => e.key === 'Enter' && handleCheck()}
-// //                 autoFocus
-// //               />
-// //               <button onClick={handleCheck}>Check</button>
-// //             </div>
-// //           )}
-// //         </div>
-// //       )}
-
-// //       <div className="completed-tasks">
-// //         {completed.map(({ id, stage }, idx) => (
-// //           <div
-// //             key={idx}
-// //             className={`completed-tag ${stage === 'main' ? 'main-completed' : 'sub-completed'}`}
-// //           >
-// //             ✅ Task {id} - {stage === 'main' ? 'Main Task Completed' : 'Logical Sub-task Completed'}
-// //           </div>
-// //         ))}
-// //       </div>
-
-// //       {allDone && (
-// //         <div className="final-container">
-// //           <h2>🎉 Congratulations! You completed all tasks and sub-tasks.</h2>
-// //           <p>Thank you for your efforts. Your Password is first letter of all answers!</p>
-// //         </div>
-// //       )}
-// //     </div>
-// //   );
-// // }
-
-// // export default App;
-
-
-// import React, { useState, useEffect } from 'react';
-// import tasks from './Tasks.jsx';
-// import './App2.css';
-
-// function App() {
-//   const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
-//   const [stage, setStage] = useState('main'); // 'main' or 'game'
-//   const [userAnswer, setUserAnswer] = useState('');
-//   const [completed, setCompleted] = useState([]);
-//   const [allDone, setAllDone] = useState(false);
-
-//   // All games and used games state
-//   const allGames = ['guessnumber', 'wordreverse', 'mathquiz'];
-//   const [usedGames, setUsedGames] = useState([]);
-
-//   // Clues used count globally max 3 (since 3 games max)
-//   const maxClues = 3;
-
-//   // Game states
-//   const [game, setGame] = useState(null);
-//   const [guessNumber, setGuessNumber] = useState(null);
-//   const [gameMessage, setGameMessage] = useState('');
-//   const [gameGuess, setGameGuess] = useState('');
-//   const [gameChances, setGameChances] = useState(0);
-//   const [wordToReverse, setWordToReverse] = useState('');
-//   const [mathQuestion, setMathQuestion] = useState('');
-//   const [mathAnswer, setMathAnswer] = useState(null);
-//   const [clueAvailable, setClueAvailable] = useState(false);
-
-//   // Clues per level
-//   const clues = {
-//     1: "It's the city of the Eiffel Tower.",
-//     2: "It's the number of wheels on a car.",
-//     3: "It's the color of the sky on a clear day.",
-//     4: "A century has this many years.",
-//     5: "He wrote 'Hamlet'.",
-//     6: "It's the largest planet in the solar system.",
-//     7: "It's a lucky number often associated with days in a week.",
-//     8: "Plants absorb this gas and release oxygen.",
-//   };
-
-//   const mainAnswers = {
-//     1: 'Paris',
-//     2: '4',
-//     3: 'Blue',
-//     4: '100',
-//     5: 'Shakespeare',
-//     6: 'Jupiter',
-//     7: '7',
-//     8: 'Carbon dioxide'
-//   };
-
-//   const currentLevelId = tasks[currentLevelIndex].id;
-
-//   // Setup game on entering game stage
-//   useEffect(() => {
-//     if (stage === 'game') {
-//       // Pick a game not used yet
-//       const availableGames = allGames.filter(g => !usedGames.includes(g));
-
-//       if (availableGames.length === 0) {
-//         // No games left
-//         alert("Your clues are over.");
-//         setStage('main');
-//         setClueAvailable(false);
-//         return;
-//       }
-
-//       const selectedGame = availableGames[Math.floor(Math.random() * availableGames.length)];
-//       setGame(selectedGame);
-//       setUsedGames(prev => [...prev, selectedGame]);
-//       setGameChances(0);
-//       setGameGuess('');
-//       setClueAvailable(false);
-
-//       if (selectedGame === 'guessnumber') {
-//         const num = Math.floor(Math.random() * 5) + 1; // 1 to 5
-//         setGuessNumber(num);
-//         setGameMessage('Guess a number between 1 and 5');
-//       } else if (selectedGame === 'wordreverse') {
-//         const word = mainAnswers[currentLevelId].toLowerCase();
-//         setWordToReverse(word);
-//         setGameMessage(`Type the reverse of the word: ${word}`);
-//       } else if (selectedGame === 'mathquiz') {
-//         const a = Math.floor(Math.random() * 10) + 1;
-//         const b = Math.floor(Math.random() * 10) + 1;
-//         setMathQuestion(`What is ${a} + ${b}?`);
-//         setMathAnswer(a + b);
-//         setGameMessage(`Answer the math question: ${a} + ${b} = ?`);
-//       }
-//     }
-//   }, [stage, currentLevelId]);
-
-//   // Handle main answer checking
-//   const handleCheck = () => {
-//     const correctAnswer = mainAnswers[currentLevelId].toLowerCase();
-//     if (userAnswer.trim().toLowerCase() === correctAnswer) {
-//       setCompleted([...completed, currentLevelId]);
-//       setUserAnswer('');
-//       setClueAvailable(false);
-
-//       if (currentLevelIndex < tasks.length - 1) {
-//         setCurrentLevelIndex(currentLevelIndex + 1);
-//         setStage('main');
-//       } else {
-//         setAllDone(true);
-//       }
-//     } else {
-//       alert('❌ Incorrect answer. Try again.');
-//     }
-//   };
-
-//   // Handle game guess submission
-//   const handleGameGuess = () => {
-//     let isCorrect = false;
-//     const input = gameGuess.trim().toLowerCase();
-
-//     if (game === 'guessnumber') {
-//       const guessNum = Number(input);
-//       if (isNaN(guessNum) || guessNum < 1 || guessNum > 5) {
-//         setGameMessage('Please enter a number between 1 and 5');
-//         return;
-//       }
-//       if (guessNum === guessNumber) {
-//         isCorrect = true;
-//       } else if (guessNum < guessNumber) {
-//         setGameMessage('Too low, try again.');
-//       } else {
-//         setGameMessage('Too high, try again.');
-//       }
-//     } else if (game === 'wordreverse') {
-//       if (input === wordToReverse.split('').reverse().join('')) {
-//         isCorrect = true;
-//       } else {
-//         setGameMessage(`Incorrect! Try again.`);
-//       }
-//     } else if (game === 'mathquiz') {
-//       const guessNum = Number(input);
-//       if (guessNum === mathAnswer) {
-//         isCorrect = true;
-//       } else {
-//         setGameMessage(`Wrong answer! Try again.`);
-//       }
-//     }
-
-//     if (isCorrect) {
-//       setGameMessage('🎉 Correct! Here is your clue:');
-//       setClueAvailable(true);
-//     } else {
-//       setGameChances(prev => {
-//         const next = prev + 1;
-//         if (next >= 3) {
-//           alert('Sorry, you used all 3 chances. Redirecting back to level.');
-//           setStage('main');
-//           setClueAvailable(false);
-//           return 0;
-//         }
-//         return next;
-//       });
-//     }
-//     setGameGuess('');
-//   };
-
-//   // Exit game and go back to main input
-//   const exitGame = () => {
-//     setStage('main');
-//     setClueAvailable(false);
-//     setGameMessage('');
-//     setGameGuess('');
-//   };
-
-//   return (
-//     <div className="app">
-//       <h1>Crescentia</h1>
-
-//       {!allDone && stage !== 'game' && (
-//         <div className="tasks-container">
-//           <div className="task-card main-task">
-//             <h2>Level {tasks[currentLevelIndex].id} - Main Level</h2>
-//             <p className="task-description">{tasks[currentLevelIndex].description}</p>
-//             <input
-//               type="text"
-//               placeholder="Enter your answer..."
-//               value={userAnswer}
-//               onChange={e => setUserAnswer(e.target.value)}
-//               onKeyDown={e => e.key === 'Enter' && handleCheck()}
-//               disabled={stage !== 'main'}
-//             />
-//             <button onClick={handleCheck} disabled={stage !== 'main'}>
-//               Check
-//             </button>
-
-//             {/* Show 'Stuck' button only if clues are still available */}
-//             {usedGames.length < maxClues && (
-//               <button
-//                 onClick={() => setStage('game')}
-//                 style={{ marginLeft: '10px', backgroundColor: '#ff6600' }}
-//               >
-//                 Stuck
-//               </button>
-//             )}
-
-//             {/* Message if no clues left */}
-//             {usedGames.length >= maxClues && (
-//               <div style={{ marginTop: '15px', fontWeight: '600', color: 'red' }}>
-//                 ❗ Your clues are over.
-//               </div>
-//             )}
-
-//             {/* Show clue if available */}
-//             {clueAvailable && (
-//               <div style={{ marginTop: '15px', fontWeight: '600', color: '#cc6600' }}>
-//                 💡 Clue: {clues[currentLevelId]}
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       )}
-
-//       {stage === 'game' && (
-//         <div className="task-card game-task" style={{ maxWidth: '400px', margin: 'auto' }}>
-//           <h2>Mini Game: {game === 'guessnumber' ? 'Guess the Number' : game === 'wordreverse' ? 'Word Reverse' : 'Math Quiz'}</h2>
-//           <p>{gameMessage}</p>
-//           {!clueAvailable ? (
-//             <>
-//               <input
-//                 type={game === 'guessnumber' ? 'number' : 'text'}
-//                 min={game === 'guessnumber' ? 1 : undefined}
-//                 max={game === 'guessnumber' ? 5 : undefined}
-//                 placeholder={game === 'guessnumber' ? 'Your guess (1-5)' : 'Your answer'}
-//                 value={gameGuess}
-//                 onChange={e => setGameGuess(e.target.value)}
-//                 onKeyDown={e => e.key === 'Enter' && handleGameGuess()}
-//               />
-//               <button onClick={handleGameGuess}>Submit</button>
-//               <p>Chances used: {gameChances} / 3</p>
-//             </>
-//           ) : (
-//             <>
-//               <div style={{ marginTop: '20px', fontWeight: '700' }}>
-//                 💡 Clue: {clues[currentLevelId]}
-//               </div>
-//               <button onClick={exitGame} style={{ marginTop: '20px', backgroundColor: '#28a745' }}>
-//                 Back to Level
-//               </button>
-//             </>
-//           )}
-//         </div>
-//       )}
-
-//       {/* Completed levels */}
-//       <div className="completed-tasks">
-//         {completed.map((id, idx) => (
-//           <div key={idx} className="completed-tag main-completed">
-//             ✅ Level {id} - Completed
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* All done */}
-//       {allDone && (
-//         <div className="final-container">
-//           <h2>🎉 Congratulations! You completed all levels.</h2>
-//           <p>Thank you for your efforts. Your Password is first letter of all answers!</p>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 import React, { useState, useEffect } from 'react';
 import './App2.css';
 
@@ -435,7 +7,7 @@ const tasks = [
     description: 'Open the folder named CRESCENTIA on the desktop',
     answer: 'hello world',
     clue: 'Output starts with "Hello" and is a classic first program phrase.',
-    gameType: 'guessNumber',
+    gameType: 'mathQuiz',
   },
   {
     id: 2,
@@ -444,8 +16,8 @@ const tasks = [
     scrambledWords: ['mplierocr', 'ryaar', 'itrcuci', 'paeh', 'elentem','The word for this level is : first letter of all the words'],
     unscrambledWords: ['compiler', 'array', 'circuit', 'heap', 'element','cache'],
     answer: 'compilerarraycircuitheapelement',
-    clue: 'The first scrambled word is "compiler".',
-    gameType: 'mathQuiz',
+    clue: 'The scrambled words are "compiler","array","circuit","heap","element".',
+    gameType: 'airplane',
   },{
   id: 3,
   description: (
@@ -455,8 +27,8 @@ const tasks = [
   ),
   puzzleLink: 'https://crosswordcres.netlify.app/',
   answer: 'fragment',
-  clue: 'The answer relates to writing code and starts with "p".',
-  gameType: 'reactionTest',
+  clue: '6. Encrypt , 8. Network , 4. Firewall .',
+  gameType: 'pingPong',
 },
 {
   id: 4,
@@ -464,14 +36,14 @@ const tasks = [
     <>
       Fix the following C program for summing two numbers:<br />
       <pre style={{ background: '#eee', padding: '10px', borderRadius: '6px' }}>
-        {`#include <stdio.h>
+        {`#include <stdioh>
 
 int main() {
     int a, b, sum;
     printf("Enter two numbers: ");
-    scanf("%d %d", &a, &b)
+    scanf("%d %d", &a, b)
     sum = a + b;
-    printf("Sum is %d", sum);
+    printf("Sum is d", sums);
     return 0;
 }`}
       </pre>
@@ -496,32 +68,18 @@ int main() {
   description: 'Convert the following binary number to decimal: 101101',
   binaryCode: '101101',
   answer: '45',  // decimal equivalent of binary 101101
-  clue: 'Remember, binary 101101 is equal to decimal 45.',
+  clue: 'Ex: If 10 is a binary number then its decimal is (0*2^0)+(1*2^1)=2',
   gameType: 'binaryToDecimal',
 },
 {
   id: 6,
-  description: 'Riddle: I speak without a mouth and hear without ears. I have nobody, but I come alive with wind. What am I?',
-  answer: 'echo',
-  clue: 'It is a phenomenon involving sound reflection.',
-  gameType: 'riddle',
+  description: 'Riddle: I live in a world of twos, No maybes, just yes or no clues. I decide with logic, simple and lean,Ones and zeros are all I’ve seen.If true I stand, if false I fall,Who am I, ruling them all?',
+  answer: 'Boolean',
+  clue: 'I’m the foundation of conditions in coding. Without me, computers wouldn’t know how to choose between two paths.',
+  gameType: 'jigsawPuzzle',
 },
 {
   id: 7,
-  description: (
-    <>
-      Decode this Morse code to find the phrase:<br />
-      <code>
-        .- .-. - .. ..-. .. -.-. .. .- .-.. / .. -. - . .-.. .-.. .. --. . -. -.-. .
-      </code>
-    </>
-  ),
-  answer: 'artificialintelligence',
-  clue: 'It\'s a term related to computers and machines mimicking human thinking.',
-  gameType: 'morseCode',
-},
-{
-  id: 8,
   description: (
     <>
       <p>What will be the output of the following C program?</p>
@@ -539,9 +97,24 @@ int main() {
     </>
   ),
   answer: '1 2 3 ',
-  clue: 'The program prints numbers from 1 to 3 separated by spaces.',
+  clue: 'First three natural numbers.',
   gameType: 'textInput',
 },
+{
+  id: 8,
+  description: (
+    <>
+      Decode this Morse code to find the phrase:<br />
+      <code>
+        .- .-. - .. ..-. .. -.-. .. .- .-.. / .. -. - . .-.. .-.. .. --. . -. -.-. .
+      </code>
+    </>
+  ),
+  answer: 'artificialintelligence',
+  clue: 'You can directly use Google.(hahaha)',
+  gameType: 'morseCode',
+},
+
 {
   id: 9,
   description: (
@@ -564,63 +137,55 @@ int main() {
   gameType: 'textInput',
 }
 
-
-
-
-
-
-
-
-
   // Add more tasks here if needed, including levels 4-7, etc.
 ];
 
 // Game components with 3 attempts logic built-in
 
-function GuessNumberGame({ onWin, onLose, attemptsLeft, setAttemptsLeft }) {
-  const [guess, setGuess] = useState('');
-  const [message, setMessage] = useState('');
-  const numberToGuess = 3;
+// function GuessNumberGame({ onWin, onLose, attemptsLeft, setAttemptsLeft }) {
+//   const [guess, setGuess] = useState('');
+//   const [message, setMessage] = useState('');
+//   const numberToGuess = 3;
 
-  const handleSubmit = () => {
-    if (parseInt(guess) === numberToGuess) {
-      setMessage('Correct! You won this game.');
-      setTimeout(() => onWin(), 1000);
-    } else {
-      setAttemptsLeft(attemptsLeft - 1);
-      setMessage(`Wrong guess. Attempts left: ${attemptsLeft - 1}`);
-      setGuess('');
-    }
-  };
+//   const handleSubmit = () => {
+//     if (parseInt(guess) === numberToGuess) {
+//       setMessage('Correct! You won this game.');
+//       setTimeout(() => onWin(), 1000);
+//     } else {
+//       setAttemptsLeft(attemptsLeft - 1);
+//       setMessage(`Wrong guess. Attempts left: ${attemptsLeft - 1}`);
+//       setGuess('');
+//     }
+//   };
 
-  return (
-    <div className="game-container">
-      <h3>Game: Guess the Number (1 to 5)</h3>
-      <input
-        type="number"
-        min="1"
-        max="5"
-        value={guess}
-        onChange={(e) => setGuess(e.target.value)}
-        placeholder="Enter your guess"
-      />
-      <button onClick={handleSubmit} disabled={attemptsLeft <= 0}>
-        Submit Guess
-      </button>
-      {message && <p>{message}</p>}
-      <button className="game-quit-btn" onClick={onLose}>
-        Quit Game
-      </button>
-    </div>
-  );
-}
+//   return (
+//     <div className="game-container">
+//       <h3>Game: Guess the Number (1 to 5)</h3>
+//       <input
+//         type="number"
+//         min="1"
+//         max="5"
+//         value={guess}
+//         onChange={(e) => setGuess(e.target.value)}
+//         placeholder="Enter your guess"
+//       />
+//       <button onClick={handleSubmit} disabled={attemptsLeft <= 0}>
+//         Submit Guess
+//       </button>
+//       {message && <p>{message}</p>}
+//       <button className="game-quit-btn" onClick={onLose}>
+//         Quit Game
+//       </button>
+//     </div>
+//   );
+// }
 
 function MathQuizGame({ onWin, onLose, attemptsLeft, setAttemptsLeft }) {
   const [answer, setAnswer] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = () => {
-    if (answer.trim() === '5') {
+    if (answer.trim() === '50') {
       setMessage('Correct! You won this game.');
       setTimeout(() => onWin(), 1000);
     } else {
@@ -633,7 +198,7 @@ function MathQuizGame({ onWin, onLose, attemptsLeft, setAttemptsLeft }) {
   return (
     <div className="game-container">
       <h3>Game: Simple Math Quiz</h3>
-      <p>What is 2 + 3 ?</p>
+      <p>If 2+2=8, 3+3=18, 4+4=32, 5+5=??</p>
       <input
         type="text"
         value={answer}
@@ -650,6 +215,414 @@ function MathQuizGame({ onWin, onLose, attemptsLeft, setAttemptsLeft }) {
     </div>
   );
 }
+function JigsawPuzzleGame({ onWin, onLose }) {
+  const canvasRef = React.useRef(null);
+  const [pieces, setPieces] = React.useState([]);
+  const [draggingPiece, setDraggingPiece] = React.useState(null);
+  const rows = 3, cols = 3;
+  const pieceSize = 400 / cols;
+  const puzzleImage = new Image();
+  puzzleImage.src = "https://i.pinimg.com/474x/0c/49/e4/0c49e4a3de2066a9fdf1f28d039e2006.jpg";
+
+  React.useEffect(() => {
+    puzzleImage.onload = () => {
+      initPuzzle();
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  class Piece {
+    constructor(img, row, col, x, y) {
+      this.img = img;
+      this.row = row;
+      this.col = col;
+      this.x = x;
+      this.y = y;
+      this.correctX = col * pieceSize;
+      this.correctY = row * pieceSize;
+      this.isCorrect = false;
+    }
+    draw(ctx) {
+      ctx.drawImage(
+        this.img,
+        this.col * (this.img.width / cols), this.row * (this.img.height / rows),
+        this.img.width / cols, this.img.height / rows,
+        this.x, this.y, pieceSize, pieceSize
+      );
+      ctx.strokeStyle = "black";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(this.x, this.y, pieceSize, pieceSize);
+    }
+    contains(x, y) {
+      return (x > this.x && x < this.x + pieceSize &&
+              y > this.y && y < this.y + pieceSize);
+    }
+    snap() {
+      const dx = Math.abs(this.x - this.correctX);
+      const dy = Math.abs(this.y - this.correctY);
+      if (dx < 15 && dy < 15) {
+        this.x = this.correctX;
+        this.y = this.correctY;
+        this.isCorrect = true;
+        return true;
+      }
+      return false;
+    }
+  }
+
+  function initPuzzle() {
+    let newPieces = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        let x = Math.random() * (400 - pieceSize);
+        let y = Math.random() * (400 - pieceSize);
+        newPieces.push(new Piece(puzzleImage, r, c, x, y));
+      }
+    }
+    setPieces(newPieces);
+    drawPuzzle(newPieces);
+  }
+
+  function drawPuzzle(piecesToDraw) {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, 400, 400);
+    piecesToDraw.forEach(p => p.draw(ctx));
+  }
+
+  function handleMouseDown(e) {
+    const rect = canvasRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    for (let i = pieces.length - 1; i >= 0; i--) {
+      if (pieces[i].contains(mouseX, mouseY) && !pieces[i].isCorrect) {
+        setDraggingPiece(pieces[i]);
+        break;
+      }
+    }
+  }
+
+  function handleMouseMove(e) {
+    if (!draggingPiece) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    draggingPiece.x = e.clientX - rect.left - pieceSize / 2;
+    draggingPiece.y = e.clientY - rect.top - pieceSize / 2;
+    drawPuzzle(pieces);
+  }
+
+  function handleMouseUp() {
+    if (!draggingPiece) return;
+    draggingPiece.snap();
+    setDraggingPiece(null);
+    drawPuzzle(pieces);
+    checkWin();
+  }
+
+  function checkWin() {
+    if (pieces.every(p => p.isCorrect)) {
+      onWin(); // clue will show
+    }
+  }
+
+  return (
+    <div className="game-container" style={{ textAlign: "center" }}>
+      <h3>🧩 Jigsaw Puzzle</h3>
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={400}
+        style={{ border: "2px solid #333f63", background: "#fffff0", cursor: "grab" }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+      />
+      <button className="game-quit-btn" onClick={onLose}>Quit Game</button>
+    </div>
+  );
+}
+function AirplaneGame({ onWin, onLose }) {
+  const canvasRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let plane = { x: 180, y: 500, width: 40, height: 40, speed: 5 };
+    let bullets = [];
+    let enemies = [];
+    let packs = [];
+    let score = 0;
+    let gameOver = false;
+    let keys = {};
+    let bulletCount = 20;
+
+    function drawPlane() {
+      ctx.fillStyle = "red";
+      ctx.fillRect(plane.x, plane.y, plane.width, plane.height);
+    }
+
+    function drawBullets() {
+      ctx.fillStyle = "yellow";
+      bullets.forEach((b) => ctx.fillRect(b.x, b.y, 5, 10));
+    }
+
+    function drawEnemies() {
+      ctx.fillStyle = "black";
+      enemies.forEach((e) => ctx.fillRect(e.x, e.y, e.width, e.height));
+    }
+
+    function drawPacks() {
+      ctx.fillStyle = "green";
+      packs.forEach((p) => ctx.fillRect(p.x, p.y, p.width, p.height));
+    }
+
+    function drawScore() {
+      ctx.fillStyle = "white";
+      ctx.font = "16px Arial";
+      ctx.fillText("Score: " + score, 10, 20);
+      ctx.fillText("Bullets: " + bulletCount, 300, 20);
+    }
+
+    function update() {
+      if (gameOver) return;
+
+      if (keys["ArrowLeft"] && plane.x > 0) plane.x -= plane.speed;
+      if (keys["ArrowRight"] && plane.x < canvas.width - plane.width)
+        plane.x += plane.speed;
+      if (keys["ArrowUp"] && plane.y > 0) plane.y -= plane.speed;
+      if (keys["ArrowDown"] && plane.y < canvas.height - plane.height)
+        plane.y += plane.speed;
+
+      bullets.forEach((b, i) => {
+        b.y -= 7;
+        if (b.y < 0) bullets.splice(i, 1);
+      });
+
+      enemies.forEach((e, i) => {
+        e.y += 3;
+        if (e.y > canvas.height) {
+          enemies.splice(i, 1);
+          score += 5;
+        }
+      });
+
+      packs.forEach((p, i) => {
+        p.y += 2;
+        if (p.y > canvas.height) packs.splice(i, 1);
+      });
+
+      enemies.forEach((e, ei) => {
+        bullets.forEach((b, bi) => {
+          if (
+            b.x < e.x + e.width &&
+            b.x + 5 > e.x &&
+            b.y < e.y + e.height &&
+            b.y + 10 > e.y
+          ) {
+            enemies.splice(ei, 1);
+            bullets.splice(bi, 1);
+          }
+        });
+
+        if (
+          plane.x < e.x + e.width &&
+          plane.x + plane.width > e.x &&
+          plane.y < e.y + e.height &&
+          plane.height + plane.y > e.y
+        ) {
+          gameOver = true;
+          alert("💥 Game Over!");
+          onLose();
+        }
+      });
+
+      packs.forEach((p, pi) => {
+        if (
+          plane.x < p.x + p.width &&
+          plane.x + plane.width > p.x &&
+          plane.y < p.y + p.height &&
+          plane.height + plane.y > p.y
+        ) {
+          bulletCount += 10;
+          packs.splice(pi, 1);
+        }
+      });
+
+      if (score >= 100) {
+        gameOver = true;
+        alert("🎉 You Win!");
+        onWin();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawPlane();
+      drawBullets();
+      drawEnemies();
+      drawPacks();
+      drawScore();
+    }
+
+    function loop() {
+      if (!gameOver) {
+        update();
+        draw();
+        requestAnimationFrame(loop);
+      }
+    }
+
+    window.addEventListener("keydown", (e) => {
+      keys[e.key] = true;
+      if (e.key === " " && bulletCount > 0) {
+        bullets.push({ x: plane.x + 18, y: plane.y });
+        bulletCount--;
+      }
+    });
+    window.addEventListener("keyup", (e) => (keys[e.key] = false));
+
+    const enemyInterval = setInterval(() => {
+      if (!gameOver) {
+        enemies.push({
+          x: Math.random() * 360,
+          y: -20,
+          width: 40,
+          height: 40,
+        });
+      }
+    }, 1500);
+
+    const packInterval = setInterval(() => {
+      if (!gameOver) {
+        packs.push({ x: Math.random() * 360, y: -20, width: 20, height: 20 });
+      }
+    }, 5000);
+
+    loop();
+
+    return () => {
+      clearInterval(enemyInterval);
+      clearInterval(packInterval);
+    };
+  }, [onWin, onLose]);
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h3>✈️ Airplane Game</h3>
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={600}
+        style={{ border: "2px solid black", background: "skyblue" }}
+      />
+      <p>➡️ Arrow Keys to Move | ␣ Spacebar to Shoot</p>
+    </div>
+  );
+}
+function PingPongGame({ onWin, onLose }) {
+  const canvasRef = React.useRef(null);
+  const [running, setRunning] = React.useState(false);
+  const [score, setScore] = React.useState(0);
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    let playerX = 360;
+    let ballX = 400, ballY = 250;
+    let ballSpeedX = 4, ballSpeedY = 5;
+    let gameOver = false;
+
+    function draw() {
+      ctx.clearRect(0, 0, 800, 500);
+
+      // Paddle
+      ctx.fillStyle = "#ff4757";
+      ctx.fillRect(playerX, 475, 80, 15);
+
+      // Ball
+      ctx.font = "32px Arial";
+      ctx.fillText("😊", ballX, ballY);
+
+      // Score
+      ctx.fillStyle = "#333";
+      ctx.font = "20px Arial";
+      ctx.fillText("Score: " + score, 350, 30);
+    }
+
+    function update() {
+      if (gameOver) return;
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+
+      // Walls
+      if (ballX <= 0 || ballX >= 768) ballSpeedX *= -1;
+      if (ballY <= 0) ballSpeedY *= -1;
+
+      // Paddle collision
+      if (
+        ballY + 32 >= 475 &&
+        ballX + 16 >= playerX &&
+        ballX <= playerX + 80
+      ) {
+        ballSpeedY *= -1;
+        setScore((s) => {
+          const newScore = s + 1;
+          if (newScore === 10) {  // WIN condition
+            alert("🎉 You win! Clue unlocked.");
+            onWin();
+            gameOver = true;
+          }
+          return newScore;
+        });
+      }
+
+      // Lose
+      if (ballY > 500) {
+        alert("💥 Game Over!");
+        onLose();
+        gameOver = true;
+      }
+
+      draw();
+      requestAnimationFrame(update);
+    }
+
+    function handleMouseMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      let mouseX = e.clientX - rect.left;
+      playerX = mouseX - 40;
+      if (playerX < 0) playerX = 0;
+      if (playerX > 720) playerX = 720;
+    }
+
+    canvas.addEventListener("mousemove", handleMouseMove);
+    setRunning(true);
+    update();
+
+    return () => {
+      canvas.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [onWin, onLose]);
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h3>🏓 Emoji Ping Pong</h3>
+      <canvas
+        ref={canvasRef}
+        width={800}
+        height={500}
+        style={{ border: "2px solid #ddd", background: "#fff" }}
+      />
+      <p>Move your mouse to control the paddle!</p>
+      <button onClick={onLose} className="game-quit-btn">Quit Game</button>
+    </div>
+  );
+}
+
+
 
 function ReactionTestGame({ onWin, onLose, attemptsLeft, setAttemptsLeft }) {
   const [timeLeft, setTimeLeft] = useState(3);
@@ -839,6 +812,32 @@ const handleGameWin = () => {
             setAttemptsLeft={setAttemptsLeft}
           />
         );
+         case 'jigsawPuzzle':   // NEW
+      return (
+        <JigsawPuzzleGame
+          onWin={handleGameWin}
+          onLose={handleGameLose}
+        />
+      );
+      case 'airplane':
+  return (
+    <AirplaneGame
+      onWin={handleGameWin}
+      onLose={handleGameLose}
+    />
+  );
+  case 'pingPong':
+  return (
+    <PingPongGame
+      onWin={handleGameWin}
+      onLose={handleGameLose}
+    />
+  );
+
+
+      
+
+
       default:
         return null;
     }
