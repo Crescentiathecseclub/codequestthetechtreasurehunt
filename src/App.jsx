@@ -432,7 +432,7 @@ import './App2.css';
 const tasks = [
   {
     id: 1,
-    description: 'What is the most traditional first program output in any language?',
+    description: 'Open the folder named CRESCENTIA on the desktop',
     answer: 'hello world',
     clue: 'Output starts with "Hello" and is a classic first program phrase.',
     gameType: 'guessNumber',
@@ -457,7 +457,120 @@ const tasks = [
   answer: 'fragment',
   clue: 'The answer relates to writing code and starts with "p".',
   gameType: 'reactionTest',
+},
+{
+  id: 4,
+  description: (
+    <>
+      Fix the following C program for summing two numbers:<br />
+      <pre style={{ background: '#eee', padding: '10px', borderRadius: '6px' }}>
+        {`#include <stdio.h>
+
+int main() {
+    int a, b, sum;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b)
+    sum = a + b;
+    printf("Sum is %d", sum);
+    return 0;
+}`}
+      </pre>
+      <p>Enter the corrected C code below:</p>
+    </>
+  ),
+  answer: `#include <stdio.h>
+
+int main() {
+    int a, b, sum;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+    sum = a + b;
+    printf("Sum is %d", sum);
+    return 0;
+}`,
+  clue: 'Remember to add the missing semicolon after scanf and check syntax carefully.',
+  gameType: 'codeFix',
+},
+{
+  id: 5,
+  description: 'Convert the following binary number to decimal: 101101',
+  binaryCode: '101101',
+  answer: '45',  // decimal equivalent of binary 101101
+  clue: 'Remember, binary 101101 is equal to decimal 45.',
+  gameType: 'binaryToDecimal',
+},
+{
+  id: 6,
+  description: 'Riddle: I speak without a mouth and hear without ears. I have nobody, but I come alive with wind. What am I?',
+  answer: 'echo',
+  clue: 'It is a phenomenon involving sound reflection.',
+  gameType: 'riddle',
+},
+{
+  id: 7,
+  description: (
+    <>
+      Decode this Morse code to find the phrase:<br />
+      <code>
+        .- .-. - .. ..-. .. -.-. .. .- .-.. / .. -. - . .-.. .-.. .. --. . -. -.-. .
+      </code>
+    </>
+  ),
+  answer: 'artificialintelligence',
+  clue: 'It\'s a term related to computers and machines mimicking human thinking.',
+  gameType: 'morseCode',
+},
+{
+  id: 8,
+  description: (
+    <>
+      <p>What will be the output of the following C program?</p>
+      <pre style={{ backgroundColor: '#eee', padding: '10px', borderRadius: '6px' }}>
+{`#include <stdio.h>
+
+int main() {
+    int i;
+    for (i = 1; i <= 3; i++) {
+        printf("%d ", i);
+    }
+    return 0;
+}`}
+      </pre>
+    </>
+  ),
+  answer: '1 2 3 ',
+  clue: 'The program prints numbers from 1 to 3 separated by spaces.',
+  gameType: 'textInput',
+},
+{
+  id: 9,
+  description: (
+    <>
+      <p>
+        Please open the Word document linked below and answer the question inside:
+      </p>
+      <a
+        href="https://example.com/your-document.docx" // Replace with your actual Word doc URL
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: 'blue', textDecoration: 'underline' }}
+      >
+        Open Word Document
+      </a>
+    </>
+  ),
+  answer: '7', // Put the expected answer users should input after reading the doc
+  clue: 'Check the document carefully for the answer.',
+  gameType: 'textInput',
 }
+
+
+
+
+
+
+
+
 
   // Add more tasks here if needed, including levels 4-7, etc.
 ];
@@ -588,6 +701,7 @@ export default function App() {
   const [unscrambleInputs, setUnscrambleInputs] = useState({});
   const [completed, setCompleted] = useState([]);
   const [allDone, setAllDone] = useState(false);
+  const [totalStuckUses, setTotalStuckUses] = useState(0);
 
   const [showClue, setShowClue] = useState(false);
   const [playingGame, setPlayingGame] = useState(false);
@@ -675,11 +789,14 @@ export default function App() {
     setUnscrambleInputs({ ...unscrambleInputs, [scrambledWord]: val });
   };
 
-  const handleGameWin = () => {
-    setPlayingGame(false);
-    setShowClue(true);
-    setClueUsedLevels((prev) => [...prev, currentTask.id]);
-  };
+const handleGameWin = () => {
+  setPlayingGame(false);
+  setShowClue(true);
+  setClueUsedLevels((prev) => [...prev, currentTask.id]);
+  setTotalStuckUses((count) => count + 1);  // Increase total usage count here
+};
+
+
 
   const handleGameLose = () => {
     alert('You quit the game. Returning to the question.');
@@ -817,15 +934,23 @@ export default function App() {
               <button onClick={handleCheck} style={{ minWidth: '120px' }} aria-label="Check your answer">
                 Check
               </button>
-
-              {!clueUsedLevels.includes(currentTask.id) && !playingGame && (
-                <button onClick={startGame} className="stuck-btn" aria-label="Are you stuck? Play a clue game">
-                  Are you stuck?
+              
+              {!clueUsedLevels.includes(currentTask.id) && !playingGame && totalStuckUses < 3 && (
+                <button
+                  onClick={startGame}
+                  className="stuck-btn"
+                  aria-label="Are you stuck? Play a clue game"
+                >
+                  Are you stuck? ({3 - totalStuckUses} left)
                 </button>
               )}
 
-              {clueUsedLevels.includes(currentTask.id) && (
-                <span style={{ color: '#cc0000', fontWeight: '600' }}>Your clues are over.</span>
+              {totalStuckUses >= 3 && (
+                <span style={{ color: '#cc0000', fontWeight: '600' }}>All clues used (3/3)</span>
+              )}
+              
+              {clueUsedLevels.includes(currentTask.id) && totalStuckUses < 3 && (
+                <span style={{ color: '#cc6600', fontWeight: '600' }}>Clue already used for this level</span>
               )}
             </div>
 
@@ -855,8 +980,15 @@ export default function App() {
 
       {allDone && (
         <div className="final-container">
-          <h2>🎉 Congratulations! You are at the end of the Treasure Hunt.</h2>
+          <h2>You are at the end of the Treasure Hunt. Now enter the password (Hint:Read the document in the level-9 carefully!!).</h2>
         
+        </div>
+      )}
+
+      {/* Show clue usage counter */}
+      {totalStuckUses > 0 && (
+        <div style={{ marginTop: '20px', textAlign: 'center', color: '#666' }}>
+          <small>Clues used: {totalStuckUses}/3</small>
         </div>
       )}
 
