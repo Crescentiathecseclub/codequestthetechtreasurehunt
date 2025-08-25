@@ -382,3 +382,109 @@ button:hover:not(:disabled) {
     margin-left: 0;
   }
 }
+/* Container for the tasks to limit width and center */
+.tasks-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Task card styles with word wrapping to avoid overflow */
+.task-card {
+  width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+/* Inputs - full width and prevent overflow */
+.task-card input[type="text"],
+.task-card input[type="number"] {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  padding: 10px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #bbb;
+  transition: border-color 0.3s ease;
+}
+
+.task-card input[type="text"]:focus,
+.task-card input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Scrambled word inputs - limit width */
+.scrambled-word-input {
+  max-width: 300px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  transition: border-color 0.3s ease;
+}
+
+.scrambled-word-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Flex container for buttons with gap and wrapping */
+.button-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  align-items: center;
+}
+
+/* Buttons - consistent min width and no wrapping of text */
+button,
+.stuck-btn {
+  white-space: nowrap;
+  min-width: 120px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+button:disabled,
+.stuck-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled),
+.stuck-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Completed task tags */
+.completed-tag {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 8px 14px;
+  border-radius: 6px;
+  margin: 6px 0;
+  font-weight: 600;
+}
+
+/* Clue text styling */
+.clue-text {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 10px 16px;
+  border-radius: 6px;
+  color: #856404;
+  font-weight: 600;
+}
