@@ -137,7 +137,7 @@ input[type='text'] {
 h1 {
   text-align: center;
   margin-bottom: 40px;
-  color: #004e8c;
+  color: #333F63;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -212,7 +212,7 @@ input[type='text']:focus {
 
 /* Buttons */
 button {
-  background-color: #007bff;
+  background-color: #333F63;
   color: white;
   border: none;
   padding: 12px 26px;
@@ -453,7 +453,7 @@ button,
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #333F63;
   color: white;
   transition: background-color 0.3s ease;
 }

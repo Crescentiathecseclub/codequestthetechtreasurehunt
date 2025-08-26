@@ -4,7 +4,11 @@ import './App2.css';
 const tasks = [
   {
     id: 1,
-    description: 'Open the folder named CRESCENTIA on the desktop',
+    description:(
+      <>
+      <a href="https://worddoc.tiiny.site/" target="_blank" rel="noopener noreferrer">Click Here</a>
+      </>
+    ),
     answer: 'hello world',
     clue: 'Output starts with "Hello" and is a classic first program phrase.',
     gameType: 'mathQuiz',
@@ -123,12 +127,12 @@ int main() {
         Please open the Word document linked below and answer the question inside:
       </p>
       <a
-        href="https://example.com/your-document.docx" // Replace with your actual Word doc URL
+        href="https://pub-141831e61e69445289222976a15b6fb3.r2.dev/1756217071918-hsa4zosqt6-1756217101967_r0i2nl_photo_2025-08-26_19-.jpg" // Replace with your actual Word doc URL
         target="_blank"
         rel="noopener noreferrer"
         style={{ color: 'blue', textDecoration: 'underline' }}
       >
-        Open Word Document
+        Click Me!
       </a>
     </>
   ),
