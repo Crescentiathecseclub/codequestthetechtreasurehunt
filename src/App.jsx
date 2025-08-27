@@ -51,6 +51,7 @@ int main() {
     return 0;
 }`}
       </pre>
+      <p>The word for this level is DEBUG</p>
       <p>Enter the corrected C code below:</p>
     </>
   ),
